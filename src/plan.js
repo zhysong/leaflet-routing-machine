@@ -300,7 +300,7 @@
 
 			var supportedEVModels = {
 				'tesla_model3': 'Tesla Model 3', 
-				'tesla_models2': 'Tesla Model S2',
+				'tesla_models': 'Tesla Model S',
 				'ford_mach-e': 'Ford Mach E'
 			}
 			var evModelsSelect = L.DomUtil.create('select', '', container);
