@@ -60,6 +60,7 @@
 				preferred_stop_charge_battery_pct: this._preferredEndChargeBatterySlider.value,
 				preferred_arrival_battery_pct: this._preferredArrivalBatterySlider.value,
 				ev_model: this._evModelsSelect.value,
+				prediction_model: this._predictionModelsSelect.value,
 
 				// simple uuid for req
 				req_id: Date.now() +"-"+ (Math.random()*1000).toFixed(0),
@@ -320,6 +321,28 @@
 				// 	option.setAttribute('selected', '');
 				// }
 			});
+			
+			var supportedPredictionModels = {
+				'voting': 'voting', 
+				'linear': 'linear'
+			}
+			var predictionModelsSelect = L.DomUtil.create('select', '', container);
+			predictionModelsSelect.setAttribute('title', 'Select Prediction Model');
+			L.DomEvent.on(predictionModelsSelect, 'change', function(e) {
+				console.debug('on predictionModelsSelect');
+				this.setWaypoints(this._waypoints);	//trigger route request via waypoints
+			}.bind(this));
+			Object.keys(supportedPredictionModels).forEach(function(key) {
+				var option = L.DomUtil.create('option', '', predictionModelsSelect);
+				option.setAttribute('value', key);
+				option.appendChild(
+					document.createTextNode(supportedPredictionModels[key])
+				);
+				// if (key == _this._local.key)
+				// {
+				// 	option.setAttribute('selected', '');
+				// }
+			});
 
 			this._departureBatterySlider = departureBatterySlider;
 			this._preferredBeginChargeBatterySlider = preferredBeginChargeBatterySlider;
@@ -327,6 +350,7 @@
 			this._preferredArrivalBatterySlider = preferredArrivalBatterySlider;
 
 			this._evModelsSelect = evModelsSelect;
+			this._predictionModelsSelect = predictionModelsSelect;
 
 			//TODO: temporarily disabled 
 			this._preferredBeginChargeBatterySlider.disabled = false;
